@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickCart — Online Shopping</title>
+<style>
+:root{--orange:#f57224;--ink:#222;--muted:#777;--bg:#f5f5f5;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+a{text-decoration:none;color:inherit}button{cursor:pointer;border:0;font:inherit}
+.top{background:#f1f1f1;padding:8px max(4%,calc((100% - 1200px)/2));display:flex;justify-content:flex-end;gap:22px;font-size:12px;color:#555}
+header{background:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0000000c}
+.head{max-width:1200px;margin:auto;padding:18px 18px;display:flex;align-items:center;gap:25px}
+.logo{font-size:28px;font-weight:800;color:var(--orange);white-space:nowrap}.logo span{color:#333}
+.search{display:flex;flex:1;background:#f3f3f3;border-radius:5px;overflow:hidden;height:44px}.search input{flex:1;border:0;background:transparent;padding:0 15px;outline:none}.search button{background:var(--orange);color:white;padding:0 25px;font-weight:bold}
+.cart{font-size:25px;position:relative}.cart small{position:absolute;top:-9px;right:-10px;background:var(--orange);color:white;border-radius:20px;padding:2px 6px;font-size:11px}
+nav{background:#fff;border-top:1px solid #eee}.navin{max-width:1200px;margin:auto;padding:12px 18px;display:flex;gap:28px;overflow:auto;white-space:nowrap;font-size:14px}
+.navin a:hover{color:var(--orange)}
+main{max-width:1200px;margin:22px auto;padding:0 18px}
+.hero{display:grid;grid-template-columns:220px 1fr;gap:15px}.categories{background:white;padding:16px;border-radius:5px}.categories h3{margin:0 0 12px;font-size:16px}.categories a{display:block;padding:9px 0;color:#555;font-size:14px}.categories a:hover{color:var(--orange)}
+.banner{min-height:300px;border-radius:5px;padding:42px 7%;display:flex;align-items:center;color:white;background:linear-gradient(110deg,#ee6b21,#ff9b45 55%,#ffc078);position:relative;overflow:hidden}
+.banner:after{content:"🛍️";font-size:150px;position:absolute;right:8%;opacity:.9;transform:rotate(-12deg)}.banner h1{font-size:40px;margin:0 0 12px;max-width:430px}.banner p{font-size:16px;max-width:390px;line-height:1.5}.primary{display:inline-block;background:#fff;color:var(--orange);padding:12px 20px;border-radius:4px;font-weight:bold;margin-top:10px}
+.section{margin-top:30px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.sectionhead h2{font-size:22px;margin:0;font-weight:600}.sectionhead a{color:var(--orange);font-size:14px}
+.category-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.cat{background:white;text-align:center;padding:18px 8px;border-radius:5px;transition:.2s}.cat:hover,.product:hover{transform:translateY(-3px);box-shadow:0 5px 18px #00000012}.cat .emoji{font-size:34px}.cat p{font-size:14px;margin:9px 0 0}
+.flash{background:#fff;padding:18px;border-radius:5px}.flashbar{display:flex;gap:12px;align-items:center;color:var(--orange);font-weight:bold;margin-bottom:15px}.timer{background:#333;color:white;padding:6px 9px;border-radius:3px;font-size:13px}
+.products{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.product{background:#fff;border-radius:5px;overflow:hidden;transition:.2s;position:relative}.product .pic{height:160px;display:grid;place-items:center;font-size:72px;background:#fafafa}.product .info{padding:12px}.product h3{font-size:14px;font-weight:400;line-height:1.4;height:38px;overflow:hidden;margin:0 0 8px}.price{color:var(--orange);font-size:18px}.old{color:#999;text-decoration:line-through;font-size:12px;margin-left:7px}.rating{color:#f5a623;font-size:12px;margin:7px 0}.add{width:100%;padding:10px;background:var(--orange);color:white;border-radius:3px;margin-top:7px;font-size:13px}.tag{position:absolute;top:10px;left:10px;background:#ffede2;color:var(--orange);padding:5px 7px;font-size:11px;border-radius:3px}
+.promo{background:#fff1e8;border-radius:6px;padding:25px;display:flex;justify-content:space-between;align-items:center}.promo h2{margin:0 0 8px}.promo p{margin:0;color:#666}.promo a{background:var(--orange);color:white;padding:11px 18px;border-radius:4px}
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.service{background:white;padding:20px;border-radius:5px}.service b{display:block;margin:8px 0}.service span{font-size:13px;color:#777}.service i{font-size:25px;font-style:normal}
+footer{background:#222;color:#ddd;margin-top:45px;padding:38px 18px 20px}.foot{max-width:1200px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:25px}.foot h3{color:white;font-size:16px}.foot p,.foot a{display:block;color:#aaa;font-size:13px;line-height:1.9}.copy{max-width:1200px;margin:25px auto 0;border-top:1px solid #444;padding-top:18px;color:#999;font-size:12px;text-align:center}
+.toast{position:fixed;bottom:20px;right:20px;background:#222;color:#fff;padding:12px 18px;border-radius:5px;display:none;z-index:10}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.categories{display:none}.banner{min-height:250px}.banner h1{font-size:32px}.banner:after{font-size:100px;right:2%}.category-grid{grid-template-columns:repeat(3,1fr)}.products{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:repeat(2,1fr)}.services{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.head{gap:12px;flex-wrap:wrap}.logo{font-size:24px}.search{order:3;flex-basis:100%}.banner{padding:28px 22px}.banner h1{font-size:27px;max-width:230px}.banner p{max-width:220px;font-size:14px}.banner:after{font-size:75px;right:0}.category-grid{grid-template-columns:repeat(2,1fr)}.sectionhead h2{font-size:19px}.foot{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><a href="#help">Help Center</a><a href="#orders">Track Order</a><a href="#account">Login / Sign Up</a></div>
+<header><div class="head"><a class="logo" href="#">quick<span>cart</span>.</a><div class="search"><input id="search" placeholder="Search products, brands and more..." aria-label="Search products"><button onclick="searchProducts()">SEARCH</button></div><a class="cart" href="#cart" aria-label="Shopping cart">🛒<small id="cartCount">0</small></a></div>
+<nav><div class="navin"><a href="#">Home</a><a href="#categories">Categories</a><a href="#flash">Flash Sale</a><a href="#products">Products</a><a href="#offers">Offers</a><a href="#services">Why QuickCart</a><a href="#contact">Contact</a></div></nav></header>
+<main>
+<section class="hero"><aside class="categories"><h3>Categories</h3><a href="#products">Fashion & Apparel</a><a href="#products">Electronics</a><a href="#products">Home & Living</a><a href="#products">Beauty & Health</a><a href="#products">Sports & Outdoors</a><a href="#products">Groceries</a><a href="#products">Books & Stationery</a></aside>
+<div class="banner"><div><h1>Everything you need, all in one place.</h1><p>Discover great products, everyday prices and a smoother way to shop online.</p><a class="primary" href="#products">Shop Now →</a></div></div></section>
+<section class="section" id="categories"><div class="sectionhead"><h2>Shop by Category</h2><a href="#products">View all</a></div><div class="category-grid">
+<a class="cat" href="#products"><div class="emoji">📱</div><p>Electronics</p></a><a class="cat" href="#products"><div class="emoji">👕</div><p>Fashion</p></a><a class="cat" href="#products"><div class="emoji">🏠</div><p>Home & Living</p></a><a class="cat" href="#products"><div class="emoji">💄</div><p>Beauty</p></a><a class="cat" href="#products"><div class="emoji">⌚</div><p>Accessories</p></a><a class="cat" href="#products"><div class="emoji">⚽</div><p>Sports</p></a></div></section>
+<section class="section flash" id="flash"><div class="sectionhead"><h2>⚡ Flash Sale</h2><a href="#products">Shop more</a></div><div class="flashbar">Limited-time deals <span class="timer" id="timer">05:00:00</span></div><div class="products" id="flashProducts"></div></section>
+<section class="section" id="products"><div class="sectionhead"><h2>Just For You</h2><a href="#products">See all products</a></div><div class="products" id="allProducts"></div></section>
+<section class="section promo" id="offers"><div><h2>Get more for less</h2><p>Find new arrivals and special offers every week.</p></div><a href="#products">Explore deals</a></section>
+<section class="section" id="services"><div class="sectionhead"><h2>Why shop with QuickCart?</h2></div><div class="services"><div class="service"><i>🚚</i><b>Fast Delivery</b><span>Convenient delivery to your doorstep.</span></div><div class="service"><i>🔒</i><b>Secure Payments</b><span>Checkout with confidence.</span></div><div class="service"><i>↩️</i><b>Easy Returns</b><span>Simple support when you need it.</span></div><div class="service"><i>💬</i><b>Customer Support</b><span>We're here to help with your order.</span></div></div></section>
+</main>
+<footer id="contact"><div class="foot"><div><a class="logo" href="#">quick<span style="color:white">cart</span>.</a><p>Your online shopping destination. Discover products you'll love, at prices you'll enjoy.</p></div><div><h3>Customer Care</h3><a href="#help">Help Center</a><a href="#orders">Order Tracking</a><a href="#returns">Returns & Refunds</a><a href="#contact">Contact Us</a></div><div><h3>About Us</h3><a href="#about">About QuickCart</a><a href="#careers">Careers</a><a href="#terms">Terms & Conditions</a><a href="#privacy">Privacy Policy</a></div><div><h3>Follow Us</h3><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">YouTube</a><a href="mailto:hello@example.com">Email Us</a></div></div><div class="copy">© 2026 QuickCart. Demo storefront — replace sample products and contact details before launch.</div></footer>
+<div class="toast" id="toast">Added to cart!</div>
+<script>
+const products=[
+{name:"Wireless Bluetooth Headphones",price:1450,old:2200,emoji:"🎧",rating:"★★★★★",tag:"-34%"},
+{name:"Smart Watch Series 8",price:2350,old:3200,emoji:"⌚",rating:"★★★★☆",tag:"-27%"},
+{name:"Everyday Casual Backpack",price:990,old:1350,emoji:"🎒",rating:"★★★★★",tag:"-27%"},
+{name:"Portable Bluetooth Speaker",price:1250,old:1800,emoji:"🔊",rating:"★★★★☆",tag:"-30%"},
+{name:"Classic Sports Sneakers",price:1890,old:2500,emoji:"👟",rating:"★★★★★",tag:"-24%"},
+{name:"Minimal Desk Lamp",price:850,old:1100,emoji:"💡",rating:"★★★★☆",tag:"-23%"},
+{name:"Premium Skin Care Set",price:1150,old:1500,emoji:"🧴",rating:"★★★★★",tag:"-23%"},
+{name:"Ceramic Coffee Mug Set",price:650,old:900,emoji:"☕",rating:"★★★★☆",tag:"-28%"},
+{name:"Mechanical Gaming Keyboard",price:2750,old:3500,emoji:"⌨️",rating:"★★★★★",tag:"-21%"},
+{name:"Cotton T-Shirt",price:550,old:750,emoji:"👕",rating:"★★★★☆",tag:"-27%"}
+];
+let cart=0;
+function card(p){return `<article class="product"><span class="tag">${p.tag}</span><div class="pic">${p.emoji}</div><div class="info"><h3>${p.name}</h3><div class="price">৳${p.price.toLocaleString("en-BD")} <span class="old">৳${p.old.toLocaleString("en-BD")}</span></div><div class="rating">${p.rating}</div><button class="add" onclick="addCart()">Add to Cart</button></div></article>`}
+document.getElementById("allProducts").innerHTML=products.map(card).join("");
+document.getElementById("flashProducts").innerHTML=products.slice(0,5).map(card).join("");
+function addCart(){cart++;document.getElementById("cartCount").textContent=cart;const t=document.getElementById("toast");t.style.display="block";setTimeout(()=>t.style.display="none",1400)}
+function searchProducts(){const q=document.getElementById("search").value.toLowerCase();const found=products.filter(p=>p.name.toLowerCase().includes(q));document.getElementById("allProducts").innerHTML=found.length?found.map(card).join():'<p>No matching products found.</p>';document.getElementById("products").scrollIntoView({behavior:"smooth"})}
+document.getElementById("search").addEventListener("keydown",e=>{if(e.key==="Enter")searchProducts()});
+let seconds=18000;setInterval(()=>{seconds--;let h=String(Math.floor(seconds/3600)).padStart(2,"0"),m=String(Math.floor(seconds%3600/60)).padStart(2,"0"),s=String(seconds%60).padStart(2,"0");document.getElementById("timer").textContent=`${h}:${m}:${s}`;if(seconds<=0)seconds=18000},1000);
+</script></body></html>
